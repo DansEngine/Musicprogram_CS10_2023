@@ -5,16 +5,17 @@ import ddf.minim.signals.*;
 import ddf.minim.spi.*;
 import ddf.minim.ugens.*;
 //Library / import library / minim
-//
-//Global variables
 Minim minim; //creates object to access all function
 AudioPlayer song1; //create "play list" variableholding extensions WAV, AIFF, AU
+//
+//Global variables
+//
 int aW, aH;
 float BX,BY,BW,BH;
 Boolean trollB=false;
 PImage josh;
-String path = "../whyImage/land/" ;
-String image = ".jpg";
+String path = "../music system/trollimage/imageUsed/" ;
+String image = "josh_hutcherson.jpg";
 //
 void setup () {
   //sizew() or fullScreen()
@@ -25,8 +26,8 @@ void setup () {
   //
   fullScreen ();
   //
-  BX = aW*0;
-  BY = aH*0;
+  BX = aW*1;
+  BY = aH*1;
   BW = aW-1;
   BH = aH-1;
   //
@@ -37,8 +38,9 @@ void setup () {
   song1 = minim.loadFile (pathway + songyouwant + extension);
 }//End setup
 void draw () {
-  if (trollB=true) {
-    troll ();
+  if (key=='P' || key=='p' ) {
+    image (josh, BX, BY, BW, BH);
+    josh = loadImage (path + image );
   }
   //Note: logical operators could be nested IFs
   if ( song1.isLooping() && song1.loopCount()!=-1 ) println("there are", song1.loopCount(), "loop left.");//
@@ -52,7 +54,7 @@ void keyPressed () {
   if (key=='P' || key=='p' ) {
     song1.play();
     //song1.loop(-1);
-    //trollB=true;
+    trollB=true;
   }
   
   if (key>='1' || key<='9' ) { //LoopButton
@@ -76,6 +78,24 @@ void keyPressed () {
  //
  if ( key=='F' || key=='f' ) song1.skip(song1.length()); //SKIP forward 1 second (1000) milisecond
  if ( key=='R' || key=='r' ) song1.skip(song1.length()*-1); // SKIP backward 1 second (-1000) milisecond
+ //
+ //Simple Stop behaviour: ask if .playing() & .pause() & .rewind(), or .rewind()
+ if ( key=='S' || key=='s' ) {
+   if ( song1.isPlaying() ) {
+     song1.pause();
+   } else {
+     song1.rewind();
+   }
+ }
+ //
+ //Simple Pause behaviour: .pause() & hold .position(), then Play
+ if (key=='Y' || key=='y') {
+   if ( song1.isPlaying()==true ) {
+     song1.pause();
+   } else {
+     song1.play();
+   }
+ }
 }//End key
 
 void mousePressed () {

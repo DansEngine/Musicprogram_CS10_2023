@@ -1,5 +1,15 @@
-//void properties () {/
-/*
+Minim minim; //creates object to access all function
+int numberOfSongs = 8;
+int numberOfSoundEffects = 4;
+AudioPlayer[] song = new AudioPlayer[ numberOfSongs ];
+AudioPlayer[] soundEffect = new AudioPlayer[ numberOfSoundEffects ];
+AudioMetaData[] songMetaData = new AudioMetaData[ numberOfSongs ];
+int aW, aH;
+float BXT,BYT,BWT,BHT;
+PFont generalFont;
+Boolean trollB = false;
+PImage josh;
+void properties () {
   println("File Name", songMetaData[0].fileName() ); //Data Correct, Verified in Console
   //Must use pure Java at OS Level to list fileName before loading Playlist
   println("Song Length (in milliseconds)", songMetaData[0].length() );
@@ -20,4 +30,3 @@
   println("Genre", songMetaData[0].genre() );
   println("Encoded", songMetaData[0].encoded() );
 }
-*/

@@ -1,4 +1,4 @@
-String path = "../music system/trollimage/imageUsed/" ;
+String path = "music system/trollimage/imageUsed/" ;
 String image = "josh_hutcherson.jpg";
 /*
 void troll() {

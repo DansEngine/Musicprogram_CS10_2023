@@ -28,16 +28,6 @@ void setup () {
   //Display algorithm
   //system background image
   //
-  aW = displayWidth;
-  aH = displayHeight;
-  //
-  fullScreen ();
-  //
-  BXT = aW*1/4;
-  BYT = aH*0;
-  BWT = aW/2;
-  BHT = aH*3/10;
-  //
   minim = new Minim (this);
   String pathway = "music system/mydownloadmusic/";
   String songyouwant = "whistletroll";
@@ -48,30 +38,20 @@ void setup () {
   songMetaData[0] = song[0].getMetaData();
   generalFont = createFont ("Agency FB Bold",48);
   //
+  aW = displayWidth;
+  aH = displayHeight;
+  //
+  fullScreen ();
+  //
+  BXT = aW*1/4;
+  BYT = aH*0;
+  BWT = aW/2;
+  BHT = aH*3/10;
   //
   //repeat:  println("?", songMetaData1.?());
   println("File Name", songMetaData[0].fileName() ); //Data correct verify
   //
- //properties ();
- println("File Name", songMetaData[0].fileName() ); //Data Correct, Verified in Console
-  //Must use pure Java at OS Level to list fileName before loading Playlist
-  println("Song Length (in milliseconds)", songMetaData[0].length() );
-  println("Song Length (in seconds)", songMetaData[0].length()/1000 ); 
-  println("Song Length (in minutes & seconds)", songMetaData[0].length()/1000/60, "minutes", ( songMetaData[0].length()/1000 - ( songMetaData[0].length()/1000/60)*60 ), "seconds" ); //Gets Formula
-  println("Song Title", songMetaData[0].title() );
-  println("Author", songMetaData[0].author() );
-  println("Composer", songMetaData[0].composer() );
-  println("Orchestra", songMetaData[0].orchestra() );
-  println("Album", songMetaData[0].album() );
-  println("Disk", songMetaData[0].disc() );
-  println("Publisher", songMetaData[0].publisher() );
-  println("Date Released", songMetaData[0].date() );
-  println("Copyright", songMetaData[0].copyright() );
-  println("Comments", songMetaData[0].comment() );
-  println("Lyrics", songMetaData[0].lyrics() ); //OPTIONAL: Music App Sing Along
-  println("Track", songMetaData[0].track() );
-  println("Genre", songMetaData[0].genre() );
-  println("Encoded", songMetaData[0].encoded() );
+ properties ();
 }//End setup
 void draw () {
   /*
@@ -81,12 +61,12 @@ void draw () {
   }
   */
   //Note: logical operators could be nested IFs
-  if ( songMetaData[0].isLooping() && songMetaData[0].loopCount()!=-1 ) println("there are", songMetaData[0].loopCount(), "loop left.");//
-  if ( songMetaData[0].isLooping() && songMetaData[0].loopCount()==-1 ) println("looping lot.");
-  if ( songMetaData[0].isPlaying() && songMetaData[0].isLooping() ) println("play -e^ipi");
+  if ( song[0].isLooping() && song[0].loopCount()!=-1 ) println("there are", song[0].loopCount(), "loop left.");//
+  if ( song[0].isLooping() && song[0].loopCount()==-1 ) println("looping lot.");
+  if ( song[0].isPlaying() && song[0].isLooping() ) println("play -e^ipi");
   //
   //debug
-  println ( "Song position", song[0].position(), "Song length", song[0].length() );
+  println ( "Song position", songMetaData[0].position(), "Song length", songMetaData[0].length() );
   //
   //
   fill(255);

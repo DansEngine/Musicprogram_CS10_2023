@@ -10,43 +10,67 @@ import ddf.minim.ugens.*;
 //Global variables
 //
 Minim minim; //creates object to access all function
-int numberOfSongs = 8;
+int numberOfSongs = 1;
 int numberOfSoundEffects = 4;
 AudioPlayer[] song = new AudioPlayer[ numberOfSongs ];
 AudioPlayer[] soundEffect = new AudioPlayer[ numberOfSoundEffects ];
 AudioMetaData[] songMetaData = new AudioMetaData[ numberOfSongs ];
 int aW, aH;
 float BXT,BYT,BWT,BHT;
+float BX, BY, BW, BH;
+float BPX, BPY, BPW, BPH;
 PFont generalFont;
 Boolean trollB = false;
 PImage josh;
-//
-println (path);
+int radius, radius2;
+float ratio, ratio2;
+float ADW ,ADH;
 //
 void setup () {
   //sizew() or fullScreen()
+  fullScreen ();
   //Display algorithm
+  ADW = +displayWidth;
+  ADH = +displayHeight;
+  /*
+  if (ADW => ADH) {
+    ratio = ADH/ADW;
+  }
+  */
+  //radius = ratio;
+  aW = displayWidth;
+  aH = displayHeight;
   //system background image
   //
   minim = new Minim (this);
   String pathway = "music system/mydownloadmusic/";
-  String songyouwant = "whistletroll";
+  String songyouwant = "whistletroll.mp3";
   String extension = ".mp3";
-  String path = sketchPath (path + songyouwant + extension);
-  println (path);
-  song[0] = minim.loadFile( path );
+  String pathsong = sketchPath (pathway + songyouwant);
+  println (pathsong);
+  song[0] = minim.loadFile( pathsong );
   songMetaData[0] = song[0].getMetaData();
   generalFont = createFont ("Agency FB Bold",48);
   //
-  aW = displayWidth;
-  aH = displayHeight;
-  //
-  fullScreen ();
+  //system background divs
+  String path = "../trollimage/imageUsed/" ;
+  String image = "testing.jpg";
+  BX = aW*0;
+  BH = aH*0;
+  BW = aW-1;
+  BH = aH-1;
+  String pathimage = sketchPath (path + image);
+  josh = loadImage (pathimage ) ;
   //
   BXT = aW*1/4;
   BYT = aH*0;
   BWT = aW/2;
   BHT = aH*3/10;
+  //
+  BPX = aW*1/2-(BPW/2);
+  BPY = aH*7/10;
+  BPW = aW*1/15 * aH/aW;
+  BPH = aH*1/15;
   //
   //repeat:  println("?", songMetaData1.?());
   println("File Name", songMetaData[0].fileName() ); //Data correct verify
@@ -66,7 +90,7 @@ void draw () {
   if ( song[0].isPlaying() && song[0].isLooping() ) println("play -e^ipi");
   //
   //debug
-  println ( "Song position", songMetaData[0].position(), "Song length", songMetaData[0].length() );
+  println ( "Song position", song[0].position(), "Song length", songMetaData[0].length() );
   //
   //
   fill(255);
@@ -77,6 +101,9 @@ void draw () {
   textFont (generalFont, size);
   text(songMetaData[0].title(), BXT, BYT, BWT, BHT);
   fill(255);
+  if ( trollB==true ) {
+    pain();
+  }
   //
   //
 }//End draw
@@ -84,7 +111,7 @@ void keyPressed () {
   if (key=='P' || key=='p' ) {
     song[0].play();
     //song1.loop(-1);
-    //trollB=true;
+    trollB=true;
   }
   
   if (key>='1' || key<='9' ) { //LoopButton

@@ -9,12 +9,13 @@ import ddf.minim.ugens.*;
 //
 //Global variables
 //
+File musicFolder;
 Minim minim; //creates object to access all function
-int numberOfSongs = 1;
+int numberOfSongs = 2;
 int numberOfSoundEffects = 4;
-AudioPlayer[] song = new AudioPlayer[ numberOfSongs ];
+AudioPlayer[] songList = new AudioPlayer[numberOfSongs]; //song is now similar to song1
+AudioMetaData[] songListMetaData = new AudioMetaData[numberOfSongs]; //same as above
 AudioPlayer[] soundEffect = new AudioPlayer[ numberOfSoundEffects ];
-AudioMetaData[] songMetaData = new AudioMetaData[ numberOfSongs ];
 int aW, aH;
 float BXT,BYT,BWT,BHT;
 float BX, BY, BW, BH;
@@ -42,14 +43,34 @@ void setup () {
   aH = displayHeight;
   //system background image
   //
-  minim = new Minim (this);
+  //
   String pathway = "music system/mydownloadmusic/";
-  String songyouwant = "whistletroll.mp3";
   String extension = ".mp3";
-  String pathsong = sketchPath (pathway + songyouwant);
-  println (pathsong);
-  song[0] = minim.loadFile( pathsong );
-  songMetaData[0] = song[0].getMetaData();
+  String pathsong = sketchPath (pathway);
+  //
+  println("Main Directory to Music Folder", pathsong);
+  musicFolder = new File(pathsong);
+  int musicFileCount = musicFolder.list().length;
+  println("File Count of the Music Folder", musicFileCount);
+  File[] musicFiles = musicFolder.listFiles(); //String of Full Directies
+  println("List of all Directories of Each Song to Load into music playlist");
+  printArray(musicFiles);
+  //Demonstration Only, files know their names in Java.IO Library
+  for ( int i = 0; i < musicFiles.length; i++ ) {
+    println("File Name", musicFiles[i].getName() );
+  }
+  //
+  String[] songFilePathway = new String[musicFileCount];
+  for ( int i = 0; i < musicFiles.length; i++ ) {
+    songFilePathway[i] = ( musicFiles[i].toString() );
+  }
+  // Re-execute Playlist Population, similar to DIV Population
+  int numberOfSongs = musicFileCount; //Placeholder Only, reexecute lines after fileCount Known
+  songList = new AudioPlayer[numberOfSongs]; //song is now similar to song1
+  songListMetaData = new AudioMetaData[numberOfSongs]; //same as above
+  //
+  minim = new Minim(this); //load from data directory, loadFile should also load from project folder, like loadImage
+  //
   generalFont = createFont ("Agency FB Bold",48);
   //
   //system background divs
@@ -73,7 +94,7 @@ void setup () {
   BPH = aH*1/15;
   //
   //repeat:  println("?", songMetaData1.?());
-  println("File Name", songMetaData[0].fileName() ); //Data correct verify
+  //println("File Name", songListMetaData[0].fileName() ); //Data correct verify
   //
  properties ();
 }//End setup
@@ -85,12 +106,12 @@ void draw () {
   }
   */
   //Note: logical operators could be nested IFs
-  if ( song[0].isLooping() && song[0].loopCount()!=-1 ) println("there are", song[0].loopCount(), "loop left.");//
-  if ( song[0].isLooping() && song[0].loopCount()==-1 ) println("looping lot.");
-  if ( song[0].isPlaying() && song[0].isLooping() ) println("play -e^ipi");
+  if ( songList[0].isLooping() && songList[0].loopCount()!=-1 ) println("there are", songList[0].loopCount(), "loop left.");//
+  if ( songList[0].isLooping() && songList[0].loopCount()==-1 ) println("looping lot.");
+  if ( songList[0].isPlaying() && songList[0].isLooping() ) println("play -e^ipi");
   //
   //debug
-  println ( "Song position", song[0].position(), "Song length", songMetaData[0].length() );
+  println ( "Song position", songList[0].position(), "Song length", songListMetaData[0].length() );
   //
   //
   fill(255);
@@ -99,7 +120,7 @@ void draw () {
   int size = 30;
   fill(0);
   textFont (generalFont, size);
-  text(songMetaData[0].title(), BXT, BYT, BWT, BHT);
+  //text(songListMetaData[0].title(), BXT, BYT, BWT, BHT);
   fill(255);
   if ( trollB==true ) {
     pain();
@@ -108,6 +129,7 @@ void draw () {
   //
 }//End draw
 void keyPressed () {
+  /* broken for now but fix variable should fixed
   if (key=='P' || key=='p' ) {
     song[0].play();
     //song1.loop(-1);
@@ -153,8 +175,8 @@ void keyPressed () {
      song[0].play();
    }
  }
+ */
 }//End key
-
 void mousePressed () {
 }//End maus
 //

@@ -11,8 +11,7 @@ import ddf.minim.ugens.*;
 //
 File musicFolder;
 Minim minim; //creates object to access all function
-int numberOfSongs = 2;
-int numberOfSoundEffects = 4;
+int numberOfSongs = 1, numberOfSoundEffects = 1, currentSong=0;
 AudioPlayer[] songList = new AudioPlayer[numberOfSongs]; //song is now similar to song1
 AudioMetaData[] songListMetaData = new AudioMetaData[numberOfSongs]; //same as above
 AudioPlayer[] soundEffect = new AudioPlayer[ numberOfSoundEffects ];
@@ -43,33 +42,30 @@ void setup () {
   aH = displayHeight;
   //system background image
   //
-  //
+  minim = new Minim(this); //load from data directory, loadFile should also load from project folder, like loadImage
+  minim = new Minim(this); //load from data directory, loadFile should also load from project folder, like loadImage
+  //Music File Load
   String pathway = "music system/mydownloadmusic/";
   String extension = ".mp3";
   String pathsong = sketchPath (pathway);
-  //
-  println("Main Directory to Music Folder", pathsong);
   musicFolder = new File(pathsong);
   int musicFileCount = musicFolder.list().length;
-  println("File Count of the Music Folder", musicFileCount);
   File[] musicFiles = musicFolder.listFiles(); //String of Full Directies
-  println("List of all Directories of Each Song to Load into music playlist");
-  printArray(musicFiles);
-  //Demonstration Only, files know their names in Java.IO Library
-  for ( int i = 0; i < musicFiles.length; i++ ) {
-    println("File Name", musicFiles[i].getName() );
-  }
-  //
   String[] songFilePathway = new String[musicFileCount];
   for ( int i = 0; i < musicFiles.length; i++ ) {
     songFilePathway[i] = ( musicFiles[i].toString() );
   }
-  // Re-execute Playlist Population, similar to DIV Population
-  int numberOfSongs = musicFileCount; //Placeholder Only, reexecute lines after fileCount Known
+  //Re-execute songList Population, similar to DIV Population
+  numberOfSongs = musicFileCount; //Placeholder Only, reexecute lines after fileCount Known
   songList = new AudioPlayer[numberOfSongs]; //song is now similar to song1
+  printArray(songList);
   songListMetaData = new AudioMetaData[numberOfSongs]; //same as above
-  //
-  minim = new Minim(this); //load from data directory, loadFile should also load from project folder, like loadImage
+  for ( int i=0; i<musicFileCount; i++ ) {
+    printArray(songList);
+    songList[i]= minim.loadFile( songFilePathway[i] );
+    songListMetaData[i] = songList[i].getMetaData();
+  } //End Music Load
+  properties();
   //
   generalFont = createFont ("Agency FB Bold",48);
   //
@@ -96,7 +92,7 @@ void setup () {
   //repeat:  println("?", songMetaData1.?());
   //println("File Name", songListMetaData[0].fileName() ); //Data correct verify
   //
- properties ();
+ songList[currentSong].play();
 }//End setup
 void draw () {
   /*
@@ -127,15 +123,27 @@ void draw () {
   }
   //
   //
+  if (songList[currentSong].isPlaying () ) {
+    //Empty IF, TRUE
+  } else {
+    //currentSong at end of FILE
+    songList[currentSong].rewind();
+    //currentSong = currentSong+1;
+    songList[currentSong].play();
+  }
+  //
+  //
 }//End draw
 void keyPressed () {
-  /* broken for now but fix variable should fixed
+  //broken for now but fix variable should fixed
+  /*
   if (key=='P' || key=='p' ) {
-    song[0].play();
+    songList[0].play();
     //song1.loop(-1);
     trollB=true;
   }
-  
+  */
+  /*
   if (key>='1' || key<='9' ) { //LoopButton
     String keystr = String.valueOf(key);
     println(keystr);

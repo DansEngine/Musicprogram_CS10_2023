@@ -43,11 +43,12 @@ void setup () {
   //system background image
   //
   minim = new Minim(this); //load from data directory, loadFile should also load from project folder, like loadImage
-  minim = new Minim(this); //load from data directory, loadFile should also load from project folder, like loadImage
   //Music File Load
+  String Effect = "soundEffect/bruh-bruh-bruh-made-with-Voicemod-technology"
   String pathway = "music system/mydownloadmusic/";
   String extension = ".mp3";
   String pathsong = sketchPath (pathway);
+  String pathEffect = sketchPath (Effect + extension);
   musicFolder = new File(pathsong);
   int musicFileCount = musicFolder.list().length;
   File[] musicFiles = musicFolder.listFiles(); //String of Full Directies
@@ -92,7 +93,7 @@ void setup () {
   //repeat:  println("?", songMetaData1.?());
   //println("File Name", songListMetaData[0].fileName() ); //Data correct verify
   //
- songList[currentSong].play();
+ //songList[currentSong].play();
 }//End setup
 void draw () {
   /*

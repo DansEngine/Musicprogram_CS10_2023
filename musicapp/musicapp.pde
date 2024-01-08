@@ -136,13 +136,11 @@ void draw () {
 }//End draw
 void keyPressed () {
   //broken for now but fix variable should fixed
-  /*
   if (key=='P' || key=='p' ) {
-    songList[0].play();
+    songList[currentSong].play();
     //song1.loop(-1);
     trollB=true;
   }
-  */
   /*
   if (key>='1' || key<='9' ) { //LoopButton
     String keystr = String.valueOf(key);
@@ -150,7 +148,7 @@ void keyPressed () {
     int loopNum = int(keystr);
   if (key=='L' || key=='l' ) song[0].loop(loopNum-1);
   if (key=='M' || key=='m' ) {
-    if ( song[0].isMuted() ) {
+    if ( songList[0].isMuted() ) {
       //ERROR: song might not be playing
       //ask if it (.isPlaying()) playing or (!.isPlaying())playin't
       song[0].unmute();
@@ -174,16 +172,16 @@ void keyPressed () {
      song[0].rewind();
    }
  }
+ */
  //
  //Simple Pause behaviour: .pause() & hold .position(), then Play
  if (key=='Y' || key=='y') {
-   if ( song[0].isPlaying()==true ) {
-     song[0].pause();
+   if ( songList[currentSong].isPlaying()==true ) {
+     songList[currentSong].pause();
    } else {
-     song[0].play();
+     songList[currentSong].play();
    }
  }
- */
 }//End key
 void mousePressed () {
 }//End maus

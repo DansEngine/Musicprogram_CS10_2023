@@ -10,10 +10,13 @@ import ddf.minim.ugens.*;
 //Global variables
 //
 File musicFolder;
+File effectFolder;
 Minim minim; //creates object to access all function
-int numberOfSongs = 1, numberOfSoundEffects = 1, currentSong=0;
+int numberOfSongs = 2, numberOfSoundEffects = 1;
+int currentSong=0, currentEffect= numberOfSoundEffects-1;
 AudioPlayer[] songList = new AudioPlayer[numberOfSongs]; //song is now similar to song1
 AudioMetaData[] songListMetaData = new AudioMetaData[numberOfSongs]; //same as above
+AudioMetaData[] soundEffectMetaData = new AudioMetaData [numberOfSoundEffects];
 AudioPlayer[] soundEffect = new AudioPlayer[ numberOfSoundEffects ];
 int aW, aH;
 float BXT,BYT,BWT,BHT;
@@ -25,6 +28,7 @@ PImage josh;
 int radius, radius2;
 float ratio, ratio2;
 float ADW ,ADH;
+Boolean changeState=false, stopBoolean=false, pauseBoolean=false;
 //
 void setup () {
   //sizew() or fullScreen()
@@ -44,11 +48,11 @@ void setup () {
   //
   minim = new Minim(this); //load from data directory, loadFile should also load from project folder, like loadImage
   //Music File Load
-  String Effect = "soundEffect/bruh-bruh-bruh-made-with-Voicemod-technology"
+  String Effect = "soundEffect/freebruh/";
   String pathway = "music system/mydownloadmusic/";
   String extension = ".mp3";
   String pathsong = sketchPath (pathway);
-  String pathEffect = sketchPath (Effect + extension);
+  String pathEffect = sketchPath (Effect);
   musicFolder = new File(pathsong);
   int musicFileCount = musicFolder.list().length;
   File[] musicFiles = musicFolder.listFiles(); //String of Full Directies
@@ -66,6 +70,24 @@ void setup () {
     songList[i]= minim.loadFile( songFilePathway[i] );
     songListMetaData[i] = songList[i].getMetaData();
   } //End Music Load
+  // sound effect
+  /*
+  effectFolder = new File(pathEffect);
+  int effectAmount = effectFolder.list().length;
+  File[] effectFiles = effectFolder.listFiles();
+  String[] effectForward = new String[effectAmount];
+  for (int i = 0;  i < effectFiles.length; i++ ) {
+    effectForward[i] = (effectFiles[i].toString() );
+  }
+  numberOfSoundEffects = effectAmount;
+  soundEffect = new AudioPlayer[numberOfSoundEffects];
+  printArray(soundEffect);
+  soundEffectMetaData = new AudioMetaData [numberOfSoundEffects];
+  for ( int i=0; i<musicFileCount; i++ ) {
+  soundEffect[i]=minim.loadFile(effectForward[i]);
+  }
+  */
+  //
   properties();
   //
   generalFont = createFont ("Agency FB Bold",48);
@@ -103,9 +125,9 @@ void draw () {
   }
   */
   //Note: logical operators could be nested IFs
-  if ( songList[0].isLooping() && songList[0].loopCount()!=-1 ) println("there are", songList[0].loopCount(), "loop left.");//
-  if ( songList[0].isLooping() && songList[0].loopCount()==-1 ) println("looping lot.");
-  if ( songList[0].isPlaying() && songList[0].isLooping() ) println("play -e^ipi");
+  if ( songList[currentSong].isLooping() && songList[currentSong].loopCount()!=-1 ) println("there are", songList[currentSong].loopCount(), "loop left.");//
+  if ( songList[currentSong].isLooping() && songList[currentSong].loopCount()==-1 ) println("looping lot.");
+  if ( songList[currentSong].isPlaying() && songList[currentSong].isLooping() ) println("play -e^ipi");
   //
   //debug
   println ( "Song position", songList[0].position(), "Song length", songListMetaData[0].length() );
@@ -122,8 +144,10 @@ void draw () {
   if ( trollB==true ) {
     pain();
   }
+  state ();
   //
   //
+  /*
   if (songList[currentSong].isPlaying () ) {
     //Empty IF, TRUE
   } else {
@@ -132,15 +156,27 @@ void draw () {
     //currentSong = currentSong+1;
     songList[currentSong].play();
   }
+  */
   //
   //
 }//End draw
 void keyPressed () {
   //broken for now but fix variable should fixed
-  if (key=='P' || key=='p' ) {
-    songList[currentSong].play();
-    //song1.loop(-1);
-    trollB=true;
+  if ( key=='P' || key=='p' ) {
+    pain ();
+    changeState=true;
+    if ( pauseBoolean==false ) {
+      pauseBoolean=true;
+      println("herek2", pauseBoolean);
+    } else {
+      pauseBoolean=false;
+      println("herek3", pauseBoolean);
+      //songList[currentSong].play();
+    }
+    if (  stopBoolean==true ) {
+      stopBoolean=false;
+    }
+    println ( "herek4", songList[currentSong].isPlaying(), pauseBoolean, stopBoolean, changeState );
   }
   /*
   if (key>='1' || key<='9' ) { //LoopButton

@@ -1,22 +1,22 @@
-
 void properties () {
-  println("File Name", songListMetaData[0].fileName() ); //Data Correct, Verified in Console
+  //println("effect Path", soundEffectMetaData[currentEffect].fileName() );
+  println("File Name", songListMetaData[currentSong].fileName() ); //Data Correct, Verified in Console
   //Must use pure Java at OS Level to list fileName before loading Playlist
-  println("Song Length (in milliseconds)", songListMetaData[0].length() );
-  println("Song Length (in seconds)", songListMetaData[0].length()/1000 ); 
-  println("Song Length (in minutes & seconds)", songListMetaData[0].length()/1000/60, "minutes", ( songListMetaData[0].length()/1000 - ( songListMetaData[0].length()/1000/60)*60 ), "seconds" ); //Gets Formula
-  println("Song Title", songListMetaData[0].title() );
-  println("Author", songListMetaData[0].author() );
-  println("Composer", songListMetaData[0].composer() );
-  println("Orchestra", songListMetaData[0].orchestra() );
-  println("Album", songListMetaData[0].album() );
-  println("Disk", songListMetaData[0].disc() );
-  println("Publisher", songListMetaData[0].publisher() );
-  println("Date Released", songListMetaData[0].date() );
-  println("Copyright", songListMetaData[0].copyright() );
-  println("Comments", songListMetaData[0].comment() );
-  println("Lyrics", songListMetaData[0].lyrics() ); //OPTIONAL: Music App Sing Along
-  println("Track", songListMetaData[0].track() );
-  println("Genre", songListMetaData[0].genre() );
-  println("Encoded", songListMetaData[0].encoded() );
+  println("Song Length (in milliseconds)", songListMetaData[currentSong].length() );
+  println("Song Length (in seconds)", songListMetaData[currentSong].length()/1000 ); 
+  println("Song Length (in minutes & seconds)", songListMetaData[currentSong].length()/1000/60, "minutes", ( songListMetaData[currentSong].length()/1000 - ( songListMetaData[currentSong].length()/1000/60)*60 ), "seconds" ); //Gets Formula
+  println("Song Title", songListMetaData[currentSong].title() );
+  println("Author", songListMetaData[currentSong].author() );
+  println("Composer", songListMetaData[currentSong].composer() );
+  println("Orchestra", songListMetaData[currentSong].orchestra() );
+  println("Album", songListMetaData[currentSong].album() );
+  println("Disk", songListMetaData[currentSong].disc() );
+  println("Publisher", songListMetaData[currentSong].publisher() );
+  println("Date Released", songListMetaData[currentSong].date() );
+  println("Copyright", songListMetaData[currentSong].copyright() );
+  println("Comments", songListMetaData[currentSong].comment() );
+  println("Lyrics", songListMetaData[currentSong].lyrics() ); //OPTIONAL: Music App Sing Along
+  println("Track", songListMetaData[currentSong].track() );
+  println("Genre", songListMetaData[currentSong].genre() );
+  println("Encoded", songListMetaData[currentSong].encoded() );
 }

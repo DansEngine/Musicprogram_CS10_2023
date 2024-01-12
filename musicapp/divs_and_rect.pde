@@ -3,7 +3,7 @@ PImage pauseB;
 void pain() {
   troll();
   if ( mouseX > BPX && mouseX < BPX + BPW && mouseY > BPY && mouseY < BPY + BPH) {
-    fill (gray);
+    fill (blue);
     noStroke ();
     ellipse (BPX, BPY, BPW, BPH);
   } else {
@@ -13,10 +13,10 @@ void pain() {
   }
   /*
   if ( mouseX > BPX && mouseX < BPX + BPW && mouseY > BPY && mouseY < BPY + BPH) {
-    if ( song[0].isPlaying()==true ) {
-     song[0].pause();
+    if ( songList[currentSong].isPlaying()==true ) {
+     songList[currentSong].pause();
    } else {
-     song[0].play();
+     songList[currentSong].play();
    }
   }
   */

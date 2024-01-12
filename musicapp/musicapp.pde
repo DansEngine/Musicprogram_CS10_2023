@@ -12,8 +12,7 @@ import ddf.minim.ugens.*;
 File musicFolder;
 File effectFolder;
 Minim minim; //creates object to access all function
-int numberOfSongs = 2, numberOfSoundEffects = 1;
-int currentSong=0, currentEffect= numberOfSoundEffects-1;
+int numberOfSongs = 2, numberOfSoundEffects = 1, currentSong=0, currentEffect= 0;
 AudioPlayer[] songList = new AudioPlayer[numberOfSongs]; //song is now similar to song1
 AudioMetaData[] songListMetaData = new AudioMetaData[numberOfSongs]; //same as above
 AudioMetaData[] soundEffectMetaData = new AudioMetaData [numberOfSoundEffects];
@@ -23,12 +22,15 @@ float BXT,BYT,BWT,BHT;
 float BX, BY, BW, BH;
 float BPX, BPY, BPW, BPH;
 PFont generalFont;
+color blue=#00DBFF;
 Boolean trollB = false;
-PImage josh;
+PImage img, josh;
+String image;
+String imaging;
 int radius, radius2;
 float ratio, ratio2;
 float ADW ,ADH;
-Boolean changeState=false, stopBoolean=false, pauseBoolean=false;
+Boolean changeState=false, stopBoolean=false, pauseBoolean=false, startB=false;
 //
 void setup () {
   //sizew() or fullScreen()
@@ -94,13 +96,23 @@ void setup () {
   //
   //system background divs
   String path = "../trollimage/imageUsed/" ;
-  String image = "testing.jpg";
+    image = "Tomahawk_Block_IV_cruise_missile_-crop.jpg";
+    String joshI = "testing.jpg";
+    /*
+  } else if ( songList[currentSong].isPlaying()) {
+    image= "testing.jpg";
+  }
+  */
+  imaging = image;
   BX = aW*0;
   BH = aH*0;
   BW = aW-1;
   BH = aH-1;
-  String pathimage = sketchPath (path + image);
-  josh = loadImage (pathimage ) ;
+  String pathimage = sketchPath (path + imaging);
+  String joshimage = sketchPath (path + joshI);
+  println("identify",pathimage);
+  img = loadImage (pathimage ) ;
+  josh = loadImage (joshimage);
   //
   BXT = aW*1/4;
   BYT = aH*0;
@@ -130,7 +142,7 @@ void draw () {
   if ( songList[currentSong].isPlaying() && songList[currentSong].isLooping() ) println("play -e^ipi");
   //
   //debug
-  println ( "Song position", songList[0].position(), "Song length", songListMetaData[0].length() );
+  println ( "Song position", songList[currentSong].position(), "Song length", songListMetaData[currentSong].length() );
   //
   //
   fill(255);
@@ -144,7 +156,31 @@ void draw () {
   if ( trollB==true ) {
     pain();
   }
-  state ();
+  if ( songList[currentSong].isPlaying() ) {
+    if ( stopBoolean==true || pauseBoolean==true ) {
+      songList[currentSong].pause();
+    }
+    if ( stopBoolean==true ) songList[currentSong].rewind();
+  } else {
+    if ( changeState==false ) {
+      songList[currentSong].rewind();
+      if (currentSong==numberOfSongs-1) {
+        currentSong=0;
+      } else {
+        currentSong = currentSong + 1; //currentSong--; currentSong-=1}
+      }
+      songList[currentSong].play();
+    }
+    if ( stopBoolean==false && pauseBoolean==false && changeState==true ) {
+      songList[currentSong].rewind();
+      songList[currentSong].play();
+      changeState=false;
+    }
+    if ( pauseBoolean==false && stopBoolean==false  && changeState==true) {
+      songList[currentSong].play();
+      changeState=false;
+    }
+  }
   //
   //
   /*
@@ -162,8 +198,8 @@ void draw () {
 }//End draw
 void keyPressed () {
   //broken for now but fix variable should fixed
-  if ( key=='P' || key=='p' ) {
-    pain ();
+   if ( key=='P' || key=='p' ) {
+     trollB=true;
     changeState=true;
     if ( pauseBoolean==false ) {
       pauseBoolean=true;
@@ -212,6 +248,30 @@ void keyPressed () {
  */
  //
  //Simple Pause behaviour: .pause() & hold .position(), then Play
+  if ( key==CODED && keyCode==RIGHT ) { //Previous
+    if ( songList[currentSong].isPlaying() ) {
+      songList[currentSong].pause();
+      songList[currentSong].skip(songListMetaData[currentSong].length()-songList[currentSong].position());
+      if (currentSong==0) {
+        currentSong=numberOfSongs-1;
+      } else {
+        currentSong = currentSong + 1; //currentSong--; currentSong-=1}
+      }
+    }
+}
+    //
+  if ( key==CODED && keyCode==LEFT ) { //Previous
+    if ( songList[currentSong].isPlaying() ) {
+      songList[currentSong].pause();
+      songList[currentSong].rewind();
+      if (currentSong==0) {
+        currentSong=numberOfSongs-1;
+      } else {
+        currentSong = currentSong - 1; //currentSong--; currentSong-=1}
+      }
+    }
+    }
+    //
  if (key=='Y' || key=='y') {
    if ( songList[currentSong].isPlaying()==true ) {
      songList[currentSong].pause();

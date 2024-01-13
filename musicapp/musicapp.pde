@@ -176,8 +176,11 @@ void draw () {
       if (currentSong==numberOfSongs-1) {
         currentSong=0;
       } else {
+        if (currentSong<3) {
         currentSong = currentSong + 1; //currentSong--; currentSong-=1}
-      }
+      } else if (currentSong>3)
+      currentSong = 0;
+    }
       songList[currentSong].play();
       //println("hereD4", songList[currentSong].isPlaying(), stopBoolean, pauseBoolean, changeState);
     }
@@ -190,11 +193,6 @@ void draw () {
     if ( pauseBoolean==false && stopBoolean==false  && changeState==true) {
       songList[currentSong].play();
       changeState=false;
-      //println("hereD6", songList[currentSong].isPlaying(), stopBoolean, pauseBoolean, changeState);
-    if ( pauseBoolean==false && stopBoolean==false  && changeState==true) {
-      songList[currentSong].play();
-      changeState=false;
-    }
     }
   }
   //
@@ -270,9 +268,14 @@ void keyPressed () {
       if (currentSong==0) {
         currentSong=numberOfSongs - 1;
       } else {
+        if (currentSong<3) {
         currentSong = currentSong + 1; //currentSong--; currentSong-=1}
+      } else if (currentSong>3) {
+        currentSong=0;
+        songList[currentSong].play();
       }
     }
+  }
 }
     //
   if ( key==CODED && keyCode==LEFT ) { //Previous

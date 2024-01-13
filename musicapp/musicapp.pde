@@ -12,7 +12,7 @@ import ddf.minim.ugens.*;
 File musicFolder;
 File effectFolder;
 Minim minim; //creates object to access all function
-int numberOfSongs = 2, numberOfSoundEffects = 1, currentSong=0, currentEffect= 0;
+int numberOfSongs = 3, numberOfSoundEffects = 1, currentSong=0, currentEffect= 0;
 AudioPlayer[] songList = new AudioPlayer[numberOfSongs]; //song is now similar to song1
 AudioMetaData[] songListMetaData = new AudioMetaData[numberOfSongs]; //same as above
 AudioMetaData[] soundEffectMetaData = new AudioMetaData [numberOfSoundEffects];
@@ -24,7 +24,7 @@ float BPX, BPY, BPW, BPH;
 PFont generalFont;
 color blue=#00DBFF;
 Boolean trollB = false;
-PImage img, josh;
+PImage img, josh, wave;
 String image;
 String imaging;
 int radius, radius2;
@@ -98,6 +98,7 @@ void setup () {
   String path = "../trollimage/imageUsed/" ;
     image = "Tomahawk_Block_IV_cruise_missile_-crop.jpg";
     String joshI = "testing.jpg";
+    String simps="maxresdefault.jpg";
     /*
   } else if ( songList[currentSong].isPlaying()) {
     image= "testing.jpg";
@@ -110,7 +111,9 @@ void setup () {
   BH = aH-1;
   String pathimage = sketchPath (path + imaging);
   String joshimage = sketchPath (path + joshI);
+  String wavesimp = sketchPath (path + simps);
   println("identify",pathimage);
+  wave = loadImage (wavesimp);
   img = loadImage (pathimage ) ;
   josh = loadImage (joshimage);
   //
@@ -154,12 +157,17 @@ void draw () {
   //text(songListMetaData[0].title(), BXT, BYT, BWT, BHT);
   fill(255);
   pain();
+  //autoplay
   if ( songList[currentSong].isPlaying() ) {
+    //println("hereD1", songList[currentSong].isPlaying(), stopBoolean, pauseBoolean, changeState);
     if ( stopBoolean==true || pauseBoolean==true ) {
+      //changeState=true;
       songList[currentSong].pause();
+      //println("hereD2", songList[currentSong].isPlaying(), stopBoolean, pauseBoolean, changeState);
     }
     if ( stopBoolean==true ) songList[currentSong].rewind();
   } else {
+    //println("hereD3", songList[currentSong].isPlaying(), stopBoolean, pauseBoolean, changeState);
     if ( changeState==false ) {
       songList[currentSong].rewind();
       if (currentSong==numberOfSongs-1) {
@@ -168,15 +176,22 @@ void draw () {
         currentSong = currentSong + 1; //currentSong--; currentSong-=1}
       }
       songList[currentSong].play();
+      //println("hereD4", songList[currentSong].isPlaying(), stopBoolean, pauseBoolean, changeState);
     }
     if ( stopBoolean==false && pauseBoolean==false && changeState==true ) {
       songList[currentSong].rewind();
       songList[currentSong].play();
       changeState=false;
+      //println("hereD5", songList[currentSong].isPlaying(), stopBoolean, pauseBoolean, changeState);
     }
     if ( pauseBoolean==false && stopBoolean==false  && changeState==true) {
       songList[currentSong].play();
       changeState=false;
+      //println("hereD6", songList[currentSong].isPlaying(), stopBoolean, pauseBoolean, changeState);
+    if ( pauseBoolean==false && stopBoolean==false  && changeState==true) {
+      songList[currentSong].play();
+      changeState=false;
+    }
     }
   }
   //
@@ -197,7 +212,6 @@ void draw () {
 void keyPressed () {
   //broken for now but fix variable should fixed
    if ( key=='P' || key=='p' ) {
-     trollB=true;
     changeState=true;
     if ( pauseBoolean==false ) {
       pauseBoolean=true;
@@ -210,7 +224,7 @@ void keyPressed () {
     if (  stopBoolean==true ) {
       stopBoolean=false;
     }
-    println ( "herek4", songList[currentSong].isPlaying(), pauseBoolean, stopBoolean, changeState );
+    println ( "this one", songList[currentSong].isPlaying(), pauseBoolean, stopBoolean, changeState );
   }
   /*
   if (key>='1' || key<='9' ) { //LoopButton
@@ -251,7 +265,7 @@ void keyPressed () {
       songList[currentSong].pause();
       songList[currentSong].skip(songListMetaData[currentSong].length()-songList[currentSong].position());
       if (currentSong==0) {
-        currentSong=numberOfSongs-1;
+        currentSong=numberOfSongs - 1;
       } else {
         currentSong = currentSong + 1; //currentSong--; currentSong-=1}
       }

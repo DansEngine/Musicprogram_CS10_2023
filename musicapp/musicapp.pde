@@ -174,7 +174,7 @@ void draw () {
       } else {
         currentSong = currentSong + 1; //currentSong--; currentSong-=1}
       }
-      songList[currentSong].play(songList[currentSong].position());
+      songList[currentSong].play();
     }
       songList[currentSong].play();
     if ( stopBoolean==false && pauseBoolean==false && changeState==true ) {

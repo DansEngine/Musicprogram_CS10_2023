@@ -30,7 +30,7 @@ String imaging;
 int radius, radius2;
 float ratio, ratio2;
 float ADW ,ADH;
-Boolean changeState=false, stopBoolean=false, pauseBoolean=false, startB=false;
+Boolean changeState=false, stopBoolean=false, pauseBoolean=false, startB=false, pause=false;
 //
 void setup () {
   //sizew() or fullScreen()
@@ -152,7 +152,7 @@ void draw () {
   //
   //
   fill(255);
-  rect(BXT, BYT, BWT, BHT);
+  //rect(BXT, BYT, BWT, BHT);
   textAlign (CENTER, CENTER);
   int size = 30;
   fill(0);
@@ -161,31 +161,23 @@ void draw () {
   fill(255);
   pain();
   //autoplay
-  if ( songList[currentSong].isPlaying() ) {
-    //println("hereD1", songList[currentSong].isPlaying(), stopBoolean, pauseBoolean, changeState);
+  if ( songList[currentSong].isPlaying()==true ) {
     if ( stopBoolean==true || pauseBoolean==true ) {
-      //changeState=true;
       songList[currentSong].pause();
-      //println("hereD2", songList[currentSong].isPlaying(), stopBoolean, pauseBoolean, changeState);
     }
-    if ( stopBoolean==true ) songList[currentSong].rewind();
+   if ( stopBoolean==true || pauseBoolean==true ) songList[currentSong].rewind();
   } else {
-    //println("hereD3", songList[currentSong].isPlaying(), stopBoolean, pauseBoolean, changeState);
     if ( changeState==false ) {
       songList[currentSong].rewind();
       if (currentSong==numberOfSongs-1) {
         currentSong=0;
       } else {
-        if (currentSong<3) {
         currentSong = currentSong + 1; //currentSong--; currentSong-=1}
-      } else if (currentSong>3)
-      currentSong = 0;
+      }
+      songList[currentSong].play(songList[currentSong].position());
     }
       songList[currentSong].play();
-      //println("hereD4", songList[currentSong].isPlaying(), stopBoolean, pauseBoolean, changeState);
-    }
     if ( stopBoolean==false && pauseBoolean==false && changeState==true ) {
-      songList[currentSong].rewind();
       songList[currentSong].play();
       changeState=false;
       //println("hereD5", songList[currentSong].isPlaying(), stopBoolean, pauseBoolean, changeState);
@@ -194,8 +186,7 @@ void draw () {
       songList[currentSong].play();
       changeState=false;
     }
-  }
-  //
+  }  //
   //
   /*
   if (songList[currentSong].isPlaying () ) {
@@ -212,7 +203,7 @@ void draw () {
 }//End draw
 void keyPressed () {
   //broken for now but fix variable should fixed
-   if ( key=='P' || key=='p' ) {
+  if ( key=='P' || key=='p' ) {
     changeState=true;
     if ( pauseBoolean==false ) {
       pauseBoolean=true;
@@ -220,12 +211,23 @@ void keyPressed () {
     } else {
       pauseBoolean=false;
       println("herek3", pauseBoolean);
-      //songList[currentSong].play();
+      //playList[currentSong].play();
     }
     if (  stopBoolean==true ) {
       stopBoolean=false;
     }
-    println ( "this one", songList[currentSong].isPlaying(), pauseBoolean, stopBoolean, changeState );
+    println ( "herek4", songList[currentSong].isPlaying(), pauseBoolean, stopBoolean, changeState );
+  }
+  //
+  if ( key=='S' | key=='s' ) {
+    changeState=true;
+    if ( stopBoolean == false ) {
+      stopBoolean = true;
+      //playList[currentSong].pause(); //auto .rewind()
+    } else {
+      stopBoolean = false;
+      //playList[currentSong].rewind(); //Not Necessary
+    }
   }
   /*
   if (key>='1' || key<='9' ) { //LoopButton
@@ -268,15 +270,14 @@ void keyPressed () {
       if (currentSong==0) {
         currentSong=numberOfSongs - 1;
       } else {
-        if (currentSong<3) {
+        if (currentSong<(numberOfSongs-1)) {
         currentSong = currentSong + 1; //currentSong--; currentSong-=1}
-      } else if (currentSong>3) {
-        currentSong=0;
+      } else if (currentSong>(numberOfSongs-1))
+        currentSong = 0;
         songList[currentSong].play();
       }
     }
   }
-}
     //
   if ( key==CODED && keyCode==LEFT ) { //Previous
     if ( songList[currentSong].isPlaying() ) {
@@ -301,6 +302,26 @@ void keyPressed () {
  }
 }//End key
 void mousePressed () {
+  /*
+  if ( mouseX > BPX && mouseX < BPX + BPW && mouseY > BPY && mouseY < BPY + BPH) {
+  pause=true;
+  }
+  if (pause=true) {
+    changeState=true;
+    if ( pauseBoolean==false ) {
+      pauseBoolean=true;
+      println("herek2", pauseBoolean);
+    } else {
+      pauseBoolean=false;
+      println("herek3", pauseBoolean);
+      //songList[currentSong].play();
+    }
+    if (  stopBoolean==true ) {
+      stopBoolean=false;
+    }
+    println ( "this one", songList[currentSong].isPlaying(), pauseBoolean, stopBoolean, changeState );
+  }
+  */
 }//End maus
 //
 //End main program

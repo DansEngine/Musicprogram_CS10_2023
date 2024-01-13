@@ -153,9 +153,7 @@ void draw () {
   textFont (generalFont, size);
   //text(songListMetaData[0].title(), BXT, BYT, BWT, BHT);
   fill(255);
-  if ( trollB==true ) {
-    pain();
-  }
+  pain();
   if ( songList[currentSong].isPlaying() ) {
     if ( stopBoolean==true || pauseBoolean==true ) {
       songList[currentSong].pause();
@@ -270,7 +268,9 @@ void keyPressed () {
         currentSong = currentSong - 1; //currentSong--; currentSong-=1}
       }
     }
-    }
+    println(currentSong);
+    songList[currentSong].play();
+  } //End Previous
     //
  if (key=='Y' || key=='y') {
    if ( songList[currentSong].isPlaying()==true ) {

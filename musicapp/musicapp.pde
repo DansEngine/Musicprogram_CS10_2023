@@ -12,7 +12,7 @@ import ddf.minim.ugens.*;
 File musicFolder;
 File effectFolder;
 Minim minim; //creates object to access all function
-int numberOfSongs = 3, numberOfSoundEffects = 1, currentSong=0, currentEffect= 0;
+int numberOfSongs = 4, numberOfSoundEffects = 1, currentSong=0, currentEffect= 0;
 AudioPlayer[] songList = new AudioPlayer[numberOfSongs]; //song is now similar to song1
 AudioMetaData[] songListMetaData = new AudioMetaData[numberOfSongs]; //same as above
 AudioMetaData[] soundEffectMetaData = new AudioMetaData [numberOfSoundEffects];
@@ -24,7 +24,7 @@ float BPX, BPY, BPW, BPH;
 PFont generalFont;
 color blue=#00DBFF;
 Boolean trollB = false;
-PImage img, josh, wave;
+PImage img, josh, wave, wego;
 String image;
 String imaging;
 int radius, radius2;
@@ -99,6 +99,7 @@ void setup () {
     image = "Tomahawk_Block_IV_cruise_missile_-crop.jpg";
     String joshI = "testing.jpg";
     String simps="maxresdefault.jpg";
+    String ways = "0653b5152ef6475caab86f0cf76b448f_464_464.jpg";
     /*
   } else if ( songList[currentSong].isPlaying()) {
     image= "testing.jpg";
@@ -109,10 +110,12 @@ void setup () {
   BH = aH*0;
   BW = aW-1;
   BH = aH-1;
+  String waydown = sketchPath ( path + ways);
   String pathimage = sketchPath (path + imaging);
   String joshimage = sketchPath (path + joshI);
   String wavesimp = sketchPath (path + simps);
   println("identify",pathimage);
+  wego = loadImage (waydown);
   wave = loadImage (wavesimp);
   img = loadImage (pathimage ) ;
   josh = loadImage (joshimage);

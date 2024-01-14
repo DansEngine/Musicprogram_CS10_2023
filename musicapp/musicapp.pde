@@ -25,12 +25,16 @@ PFont generalFont;
 color blue=#00DBFF;
 Boolean trollB = false;
 PImage img, josh, wave, wego;
+//String title = songListMetaData[currentSong].title();
 String image;
 String imaging;
 int radius, radius2;
 float ratio, ratio2;
 float ADW ,ADH;
-Boolean changeState=false, stopBoolean=false, pauseBoolean=false, startB=false, pause=false;
+float PBX, FBX;
+float PBW, PBH;
+float FBW, FBH;
+Boolean changeState=false, stopBoolean=false, pauseBoolean=false, startB=false, pause=false, FB=false, PB=false;
 //
 void setup () {
   //sizew() or fullScreen()
@@ -130,6 +134,13 @@ void setup () {
   BPW = aW*1/15 * aH/aW;
   BPH = aH*1/15;
   //
+  PBX = aW*3/8;
+  FBX = aW*5/8;
+  PBW = BPW;
+  PBH = BPH;
+  FBW = BPW;
+  FBH = BPH;
+  //
   //repeat:  println("?", songMetaData1.?());
   //println("File Name", songListMetaData[0].fileName() ); //Data correct verify
   //
@@ -151,15 +162,16 @@ void draw () {
   println ( "Song position", songList[currentSong].position(), "Song length", songListMetaData[currentSong].length() );
   //
   //
-  fill(255);
-  //rect(BXT, BYT, BWT, BHT);
-  textAlign (CENTER, CENTER);
-  int size = 30;
-  fill(0);
-  textFont (generalFont, size);
   //text(songListMetaData[0].title(), BXT, BYT, BWT, BHT);
   fill(255);
   pain();
+  fill(255);
+  //rect(BXT, BYT, BWT, BHT);
+  textAlign (CENTER, CENTER);
+  int size = 55;
+  fill(blue);
+  textFont (generalFont, size);
+  text(songListMetaData[currentSong].title(),BWT, BHT);
   //autoplay
   if ( songList[currentSong].isPlaying()==true ) {
     if ( stopBoolean==true || pauseBoolean==true ) {
@@ -302,6 +314,43 @@ void keyPressed () {
  }
 }//End key
 void mousePressed () {
+  if ( mouseX > PBX && mouseX < PBX + PBW && mouseY > BPY && mouseY < BPY + PBH) {
+    PB=true;
+  if ( PB=true) {
+     if ( songList[currentSong].isPlaying() ) {
+      songList[currentSong].pause();
+      songList[currentSong].rewind();
+      if (currentSong==0) {
+        currentSong=numberOfSongs-1;
+      } else {
+        currentSong = currentSong - 1; //currentSong--; currentSong-=1}
+      }
+    }
+    println(currentSong);
+    songList[currentSong].play();
+  }
+}
+  //
+  if ( mouseX > FBX && mouseX < FBX + FBW && mouseY > BPY && mouseY < BPY + FBH) {  
+    FB=true;
+  //
+  if (FB=true) {
+    if ( songList[currentSong].isPlaying() ) {
+      songList[currentSong].pause();
+      songList[currentSong].skip(songListMetaData[currentSong].length()-songList[currentSong].position());
+      if (currentSong==0) {
+        currentSong=numberOfSongs - 1;
+      } else {
+        if (currentSong<(numberOfSongs-1)) {
+        currentSong = currentSong + 1; //currentSong--; currentSong-=1}
+      } else if (currentSong>(numberOfSongs-1))
+        currentSong = 0;
+        songList[currentSong].play();
+      }
+    }
+  }
+  }
+  //
   /*
   if ( mouseX > BPX && mouseX < BPX + BPW && mouseY > BPY && mouseY < BPY + BPH) {
   pause=true;

@@ -177,7 +177,7 @@ void draw () {
     if ( stopBoolean==true || pauseBoolean==true ) {
       songList[currentSong].pause();
     }
-   if ( stopBoolean==true || pauseBoolean==true ) songList[currentSong].rewind();
+   if ( stopBoolean==true ) songList[currentSong].rewind();
   } else {
     if ( changeState==false ) {
       songList[currentSong].rewind();
@@ -197,8 +197,17 @@ void draw () {
     if ( pauseBoolean==false && stopBoolean==false  && changeState==true) {
       songList[currentSong].play();
       changeState=false;
-    }
-  }  //
+    } else {
+      if ( changeState==true ) {
+        if (pauseBoolean==true && stopBoolean==false  && changeState==true) {
+        if (songList[currentSong].isPlaying()) {
+          songList[currentSong].pause();
+        }
+        }
+       }
+      }
+     }     
+      //
   //
   /*
   if (songList[currentSong].isPlaying () ) {
@@ -351,7 +360,6 @@ void mousePressed () {
   }
   }
   //
-  /*
   if ( mouseX > BPX && mouseX < BPX + BPW && mouseY > BPY && mouseY < BPY + BPH) {
   pause=true;
   }
@@ -370,7 +378,6 @@ void mousePressed () {
     }
     println ( "this one", songList[currentSong].isPlaying(), pauseBoolean, stopBoolean, changeState );
   }
-  */
 }//End maus
 //
 //End main program

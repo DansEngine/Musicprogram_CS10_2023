@@ -34,6 +34,7 @@ float ADW ,ADH;
 float PBX, FBX;
 float PBW, PBH;
 float FBW, FBH;
+float FBY, PBY;
 Boolean changeState=false, stopBoolean=false, pauseBoolean=false, startB=false, pause=false, FB=false, PB=false;
 //
 void setup () {
@@ -140,6 +141,8 @@ void setup () {
   PBH = BPH;
   FBW = BPW;
   FBH = BPH;
+  FBY = BPY;
+  PBY = BPY;
   //
   //repeat:  println("?", songMetaData1.?());
   //println("File Name", songListMetaData[0].fileName() ); //Data correct verify
@@ -199,14 +202,14 @@ void draw () {
       changeState=false;
     } else {
       if ( changeState==true ) {
-        if (pauseBoolean==true && stopBoolean==false  && changeState==true) {
+        if (pauseBoolean==true && stopBoolean==false ) {
         if (songList[currentSong].isPlaying()) {
           songList[currentSong].pause();
         }
         }
        }
       }
-     }     
+     }
       //
   //
   /*
@@ -298,6 +301,8 @@ void keyPressed () {
         songList[currentSong].play();
       }
     }
+    println(currentSong);
+    songList[currentSong].play();
   }
     //
   if ( key==CODED && keyCode==LEFT ) { //Previous
@@ -323,7 +328,7 @@ void keyPressed () {
  }
 }//End key
 void mousePressed () {
-  if ( mouseX > PBX && mouseX < PBX + PBW && mouseY > BPY && mouseY < BPY + PBH) {
+  if ( mouseX > PBX && mouseX < PBX + PBW && mouseY > PBY && mouseY < PBY + PBH) {
     PB=true;
   if ( PB=true) {
      if ( songList[currentSong].isPlaying() ) {
@@ -332,7 +337,11 @@ void mousePressed () {
       if (currentSong==0) {
         currentSong=numberOfSongs-1;
       } else {
+        if (currentSong<(numberOfSongs-1)) {
         currentSong = currentSong - 1; //currentSong--; currentSong-=1}
+      } else if (currentSong>(numberOfSongs-1))
+        currentSong = 3;
+        songList[currentSong].play();
       }
     }
     println(currentSong);
@@ -340,11 +349,10 @@ void mousePressed () {
   }
 }
   //
-  if ( mouseX > FBX && mouseX < FBX + FBW && mouseY > BPY && mouseY < BPY + FBH) {  
+  if ( mouseX > FBX && mouseX < FBX + FBW && mouseY > FBY && mouseY < FBY + FBH) {
     FB=true;
   //
   if (FB=true) {
-    if ( songList[currentSong].isPlaying() ) {
       songList[currentSong].pause();
       songList[currentSong].skip(songListMetaData[currentSong].length()-songList[currentSong].position());
       if (currentSong==0) {
@@ -356,14 +364,17 @@ void mousePressed () {
         currentSong = 0;
         songList[currentSong].play();
       }
-    }
+      println(currentSong);
+    songList[currentSong].play();
   }
-  }
+}
   //
-  if ( mouseX > BPX && mouseX < BPX + BPW && mouseY > BPY && mouseY < BPY + BPH) {
-  pause=true;
-  }
+  if ( mouseX > BPX && mouseX < BPX + BPW && mouseY > BPY && mouseY < BPY + BPH) { 
+    pause=true;
   if (pause=true) {
+    fill (blue);
+    noStroke ();
+    ellipse (BPX, BPY, BPW, BPH);
     changeState=true;
     if ( pauseBoolean==false ) {
       pauseBoolean=true;
@@ -372,11 +383,15 @@ void mousePressed () {
       pauseBoolean=false;
       println("herek3", pauseBoolean);
       //songList[currentSong].play();
+      noFill ();
+    noStroke ();
+    ellipse (BPX, BPY, BPW, BPH);
     }
     if (  stopBoolean==true ) {
       stopBoolean=false;
     }
     println ( "this one", songList[currentSong].isPlaying(), pauseBoolean, stopBoolean, changeState );
+  }
   }
 }//End maus
 //

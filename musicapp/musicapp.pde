@@ -328,13 +328,13 @@ void keyPressed () {
  }
 }//End key
 void mousePressed () {
-  if ( mouseX > PBX && mouseX < PBX + PBW && mouseY > PBY && mouseY < PBY + PBH) {
+  if ( mouseX > (PBX-PBW/2) && mouseX < (PBX-PBW/2) + PBW && mouseY > (PBY-PBH/2) && mouseY < (PBY-PBH/2) + PBH) {
     PB=true;
   if ( PB=true) {
      if ( songList[currentSong].isPlaying() ) {
       songList[currentSong].pause();
       songList[currentSong].rewind();
-      if (currentSong==0) {
+      if (currentSong==3) {
         currentSong=numberOfSongs-1;
       } else {
         if (currentSong>(numberOfSongs-1)) {
@@ -349,7 +349,7 @@ void mousePressed () {
   }
 }
   //
-  if ( mouseX > FBX && mouseX < FBX + FBW && mouseY > FBY && mouseY < FBY + FBH) {
+  if ( mouseX > (FBX-FBW/2) && mouseX < (FBX-FBW/2) + FBW && mouseY > (FBY-FBH/2) && mouseY < (FBY-FBH/2) + FBH) {
     FB=true;
   if (FB=true) {
       songList[currentSong].pause();
@@ -368,7 +368,7 @@ void mousePressed () {
   }
 }
   //
-  if ( mouseX > BPX && mouseX < BPX + BPW && mouseY > BPY && mouseY < BPY + BPH) { 
+  if ( mouseX > (BPX-BPW/2) && mouseX < (BPX-BPW/2) + BPW && mouseY > (BPY-BPH/2) && mouseY < (BPY-BPH/2) + BPH) { 
     pause=true;
   if (pause=true) {
     fill (blue);

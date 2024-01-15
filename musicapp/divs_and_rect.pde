@@ -4,7 +4,7 @@ void pain() {
   troll();
   //
   //
-  if ( mouseX > PBX && mouseX < PBX + BPW && mouseY > BPY && mouseY < BPY + BPH) {
+  if ( mouseX > (PBX-PBH/2) && mouseX < (PBX-PBH/2) + BPW && mouseY > (PBY-PBH/2) && mouseY < (PBY-PBH/2) + BPH) {
     fill (blue);
     noStroke ();
     ellipse (PBX, BPY, BPW, BPH);
@@ -15,7 +15,7 @@ void pain() {
   }
   //
   //
-  if ( mouseX > FBX && mouseX < FBX + BPW && mouseY > BPY && mouseY < BPY + BPH) {
+  if ( mouseX > (FBX-FBW/2) && mouseX < (FBX-FBW/2) + FBW && mouseY > (FBY-FBH/2) && mouseY < (FBY-FBH/2) + FBH) {
     fill (blue);
     noStroke ();
     ellipse (FBX, BPY, BPW, BPH);

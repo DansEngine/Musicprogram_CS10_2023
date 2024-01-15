@@ -294,7 +294,7 @@ void keyPressed () {
       if (currentSong==0) {
         currentSong=numberOfSongs - 1;
       } else {
-        if (currentSong<(numberOfSongs-1)) {
+        if (currentSong==0) {
         currentSong = currentSong + 1; //currentSong--; currentSong-=1}
       } else if (currentSong>(numberOfSongs-1))
         currentSong = 0;
@@ -337,9 +337,9 @@ void mousePressed () {
       if (currentSong==0) {
         currentSong=numberOfSongs-1;
       } else {
-        if (currentSong<(numberOfSongs-1)) {
+        if (currentSong>(numberOfSongs-1)) {
         currentSong = currentSong - 1; //currentSong--; currentSong-=1}
-      } else if (currentSong>(numberOfSongs-1))
+      } else if (currentSong<(numberOfSongs-1))
         currentSong = 3;
         songList[currentSong].play();
       }
@@ -351,7 +351,6 @@ void mousePressed () {
   //
   if ( mouseX > FBX && mouseX < FBX + FBW && mouseY > FBY && mouseY < FBY + FBH) {
     FB=true;
-  //
   if (FB=true) {
       songList[currentSong].pause();
       songList[currentSong].skip(songListMetaData[currentSong].length()-songList[currentSong].position());

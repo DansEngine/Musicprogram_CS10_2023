@@ -175,6 +175,10 @@ void draw () {
   fill(blue);
   textFont (generalFont, size);
   text(songListMetaData[currentSong].title(),BWT, BHT);
+  textAlign (CENTER, CENTER);
+  fill(blue);
+  textFont (generalFont, size);
+  text(songList[currentSong].position()/1000 - ( songList[currentSong].position()/1000/60)*60,BWT, BHT*3/8);
   //autoplay
   if ( songList[currentSong].isPlaying()==true ) {
     if ( stopBoolean==true || pauseBoolean==true ) {
@@ -334,14 +338,12 @@ void mousePressed () {
      if ( songList[currentSong].isPlaying() ) {
       songList[currentSong].pause();
       songList[currentSong].rewind();
-      if (currentSong==3) {
+      pauseBoolean=false;
+      stopBoolean=false;
+      if (currentSong==0) {
         currentSong=numberOfSongs-1;
       } else {
-        if (currentSong>(numberOfSongs-1)) {
         currentSong = currentSong - 1; //currentSong--; currentSong-=1}
-      } else if (currentSong<(numberOfSongs-1))
-        currentSong = 3;
-        songList[currentSong].play();
       }
     }
     println(currentSong);
@@ -352,18 +354,18 @@ void mousePressed () {
   if ( mouseX > (FBX-FBW/2) && mouseX < (FBX-FBW/2) + FBW && mouseY > (FBY-FBH/2) && mouseY < (FBY-FBH/2) + FBH) {
     FB=true;
   if (FB=true) {
+      if ( songList[currentSong].isPlaying() ) {
       songList[currentSong].pause();
-      songList[currentSong].skip(songListMetaData[currentSong].length()-songList[currentSong].position());
-      if (currentSong==0) {
-        currentSong=numberOfSongs - 1;
+      songList[currentSong].rewind();
+      pauseBoolean=false;
+      stopBoolean=false;
+      if (currentSong==3) {
+        currentSong=0;
       } else {
-        if (currentSong<(numberOfSongs-1)) {
         currentSong = currentSong + 1; //currentSong--; currentSong-=1}
-      } else if (currentSong>(numberOfSongs-1))
-        currentSong = 0;
-        songList[currentSong].play();
       }
-      println(currentSong);
+    }
+    println(currentSong);
     songList[currentSong].play();
   }
 }

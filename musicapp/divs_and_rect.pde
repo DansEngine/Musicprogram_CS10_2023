@@ -1,4 +1,4 @@
-color gray = #DEDEDE; 
+color gray = #DEDEDE, red= #FF0000; 
 PImage pauseB, forward, previous;
 void pain() {
   troll();

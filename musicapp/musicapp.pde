@@ -35,6 +35,7 @@ float PBX, FBX;
 float PBW, PBH;
 float FBW, FBH;
 float FBY, PBY;
+float xBG, yBG, WBG, HBG;
 Boolean changeState=false, stopBoolean=false, pauseBoolean=false, startB=false, pause=false, FB=false, PB=false;
 //
 void setup () {
@@ -144,6 +145,11 @@ void setup () {
   FBY = BPY;
   PBY = BPY;
   //
+  xBG = aW*19/20 ;
+  yBG = aH*0 ;
+  WBG = aW*1/20 ;
+  HBG = aH*1/20 ;
+  //
   //repeat:  println("?", songMetaData1.?());
   //println("File Name", songListMetaData[0].fileName() ); //Data correct verify
   //
@@ -179,6 +185,26 @@ void draw () {
   fill(blue);
   textFont (generalFont, size);
   text(songList[currentSong].position()/1000 - ( songList[currentSong].position()/1000/60)*60,BWT, BHT*3/8);
+  fill (255);
+  rect (xBG, yBG, WBG, HBG);
+  int overCH = red;
+  if ( mouseX>xBG && mouseX<xBG + WBG && mouseY>yBG && mouseY<yBG + HBG ) {
+    fill (overCH);
+    rect (xBG, yBG, WBG, HBG);
+    fill(0);
+    textAlign (CENTER, CENTER);
+    textFont (generalFont, 30);
+    text ("x", xBG, yBG, WBG, HBG);
+  } else {
+    fill(255);
+    rect (xBG, yBG, WBG, HBG);
+    fill(0);
+    textAlign (CENTER, CENTER);
+    textFont (generalFont, 30);
+    text ("x", xBG, yBG, WBG, HBG);
+  }
+  //END QUIT BUTTON
+  //
   //autoplay
   if ( songList[currentSong].isPlaying()==true ) {
     if ( stopBoolean==true || pauseBoolean==true ) {
@@ -394,6 +420,7 @@ void mousePressed () {
     println ( "this one", songList[currentSong].isPlaying(), pauseBoolean, stopBoolean, changeState );
   }
   }
+  if ( mouseX>xBG && mouseX<xBG + WBG && mouseY>yBG && mouseY<yBG + HBG ) exit();
 }//End maus
 //
 //End main program
